@@ -1,0 +1,135 @@
+<!DOCTYPE>
+<html ng-app="App">
+<head>
+<link rel="stylesheet" href="./styleSheet.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+<!-- Latest compiled and minified CSS -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+
+<!-- <script src="../Scripts/angular-route.min.js"></script> -->
+<!-- <script src="../Scripts/angular.min.js"></script> -->
+<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+<script src="https://code.angularjs.org/1.3.0/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.3.0/angular-route.min.js"></script>
+<script src="https://code.angularjs.org/1.3.0/angular-resource.min.js"></script>
+<script src="https://code.angularjs.org/1.3.0/angular-sanitize.min.js"></script>
+<!-- <base href="/" /> -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        h4 {color:  rgb(255, 128, 0);}
+    </style>
+  <title>Contact List App</title>
+</head>
+<body>
+  <div class="row">
+    <div id="header" class="col-sm-12">
+         <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">NeevSystems</a>
+              </div>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              </ul>
+            </div>
+          </nav>
+    </div>
+  </div>
+ <div class="row">
+            <div id="sidebar-left">
+              <div class="col-sm-3">
+                <div class="sidebar" >
+                    <a href="#/home" class="active"><span class="glyphicon glyphicon-home hidden-xs"></span> Home</a>
+                    <a href="#/admin"><span class="glyphicon glyphicon-user"></span> Admin</a>
+                    <a href="#/contact"><span class="glyphicon glyphicon-phone-alt"></span> Contact</a>
+                  </div>
+                </div>
+            </div>
+            <div id="main">
+             
+                <ng-view></ng-view>
+             <!-- <div class="col-sm-9">
+                <div class="container" ng-controller="AppCtrl">
+                   
+                     <h1>Contact List App</h1>
+                    <form name="myForm">
+                    <table class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th>Name</th>         
+                          <th>Email</th>
+                          <th>Number</th>
+                          <th>File Upload</th>
+                          <th>Action</th>
+                          
+                          <th>&nbsp;</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><input class="form-control" type="text" id="name" name="name" ng-model="contact.name" ng-minlength="5" ng-maxlength="20" ng-pattern="/^[A-z][A-z0-9]*$/" ng-required="true">
+                            <span ng-show="myForm.name.$error.required && myForm.name.$dirty">Enter Proper Name</span>
+                            <span ng-show="!myForm.name.$error.minLength && !myForm.name.$error.maxLength && myForm.name.$error.pattern && myForm.name.$dirty">Must start with a letter, and contain letters &amp; numbers only.</span>
+                            <span ng-show="!myForm.name.$error.required && (myForm.name.$error.minlength || myForm.name.$error.maxlength) && myForm.name.$dirty">Username ust be between 5 and 20 characters.</span>
+                          </td>
+                          <td><input class="form-control" type="email" id="email" name="email" ng-model="contact.email" ng-required="true">
+                            <span ng-show="myForm.email.$error.required && myForm.email.$dirty">Enter Proper Email </span>
+                            <span ng-show="!myForm.email.$error.required && myForm.email.$error.email && myForm.email.$dirty">invalid email</span>
+                          </td>
+                          <td><input class="form-control" type="number" id="number" name="number" ng-model="contact.phone" ng-minlength="10" ng-maxlength="11" ng-required="true">
+                            <span ng-show="myForm.number.$error.required && myForm.number.$dirty">Enter Proper Number</span>
+                            <span ng-show="!myForm.number.$error.required && (myForm.number.$error.minlength || myForm.number.$error.maxlength) && myForm.number.$dirty">Username 10 in Number.</span>
+                        </td>
+                      <td><input type="file" id="uploadFile" name="uploadFile"  file-model="uploadFile"/>
+                          <button ng-click="uploadFile()">upload me</button>
+                      </td>
+                
+                      <td><button class="btn btn-primary" type="submit" ng-click="addContact()" ng-disabled="!myForm.$valid">Add Contact</button></td>
+                          <td><div class="form-group"><button class="btn btn-info" id="submitForm" name="submitForm" type="submit" class="btn btn-primary" ng-click="update()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button>
+                          </div>
+                        </td>
+                        </tr>
+                        <tr ng-repeat="contact in contactlist">
+                          <td>{{contact.name}}</td>
+                          <td>{{contact.email}}</td>
+                          <td>{{contact.phone}}</td>
+                          <td>{{contact.uploadFile}}</td>
+                          <td><button class="btn btn-danger" ng-click="remove(contact._id)">Remove</button></td>
+                          <td><button class="btn btn-warning" ng-click="edit(contact._id)">Edit</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </form>
+                </div>
+              </div> -->
+
+
+
+            </div>
+    </div>
+		<!-- <div id="sidebar-right">Right</div> -->
+		<div id="footer">
+
+        <nav class="navbar navbar-inverse">
+            <!-- <ul class="nav navbar-nav">
+              <li><a href="#">Link</a></li>
+              <li><a href="#">Link</a></li>
+            </ul>
+            <p class="navbar-text">Some text</p> -->
+            <p class="navbar-text">Copyright © NeevSystems 2018</p>
+          </nav>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+<script src="../lib/ng-file-upload.min.js"></script>
+
+<script src="../controllers/adminController.js"></script>
+<script src="../controllers/contactController.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
